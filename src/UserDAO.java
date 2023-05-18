@@ -3,6 +3,10 @@ import java.sql.*;
 public class UserDAO {
     private Connection connection;
 
+    public UserDAO(Connection connection) {
+        this.connection = connection;
+    }
+
     public UserDAO(String dbPath) {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
