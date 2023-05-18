@@ -1,19 +1,24 @@
 import sqlite3
 
-# Connect to the SQLite database
-conn = sqlite3.connect('database.db')
-cursor = conn.cursor()
+# Connect to the database
+conn = sqlite3.connect('mydatabase.db')
+c = conn.cursor()
 
-# Execute a SELECT query
-cursor.execute("SELECT * FROM table_name")
-rows = cursor.fetchall()
+try:
+    # Execute your SQL queries or other database operations here
 
-# Process the retrieved rows
-for row in rows:
-    # Access the columns by index or name
-    column1_value = row[0]
-    column2_value = row[1]
-    # ... process the values
+    # Example: Creating a table
+    c.execute('''CREATE TABLE IF NOT EXISTS employees
+                 (id INT PRIMARY KEY     NOT NULL,
+                 name           TEXT    NOT NULL,
+                 age            INT     NOT NULL,
+                 address        CHAR(50),
+                 salary         REAL);''')
+                 
+    # Commit the changes
+    conn.commit()
 
-# Close the database connection
-conn.close()
+    # Close the connection
+    conn.close()
+except Exception as e:
+    print("Error:", str(e))
