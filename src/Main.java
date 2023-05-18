@@ -1,31 +1,29 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        // Establish a connection to the database
-        Connection connection = null;
+        // Define the command to execute the Python script
+        List<String> command = new ArrayList<>();
+        command.add("python");
+        command.add("/Users/charalampos/Desktop/Charalampos_testing/java db with sqlite/Java-db-with-SQLite/src/database.py");
+
+        // Create the process builder and start the process
+        ProcessBuilder pb = new ProcessBuilder(command);
         try {
-            connection = DriverManager.getConnection("jdbc:sqlite:database.db");
+            Process process = pb.start();
 
-            // Create an instance of the UserDAO
-            UserDAO userDAO = new UserDAO(connection);
+            // Wait for the process to complete and get the exit code
+            int exitCode = process.waitFor();
 
-            // Create the user table if it doesn't exist
-            userDAO.createUserTable();
-
-            // Insert a user into the database
-            userDAO.insertUser("John Doe", "john.doe@example.com");
-
-            // Retrieve users from the database
-            // You can add more code here to perform additional database operations
-
-
-            
-            // Close the connection
-            userDAO.closeConnection();
-        } catch (SQLException e) {
+            // Check the exit code to determine if the Python script executed successfully
+            if (exitCode == 0) {
+                System.out.println("Python script executed successfully");
+            } else {
+                System.out.println("Python script execution failed");
+            }
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
