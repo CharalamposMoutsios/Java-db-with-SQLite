@@ -21,6 +21,8 @@ public class Main {
             // Retrieve users from the database
             // You can add more code here to perform additional database operations
 
+
+            
             // Close the connection
             userDAO.closeConnection();
         } catch (SQLException e) {
