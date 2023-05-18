@@ -7,6 +7,9 @@ c = conn.cursor()
 try:
     # Execute your SQL queries or other database operations here
 
+
+
+
     # Example: Creating a table
     c.execute('''CREATE TABLE IF NOT EXISTS employees
                  (id INT PRIMARY KEY     NOT NULL,
